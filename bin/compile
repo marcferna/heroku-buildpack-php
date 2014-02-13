@@ -47,17 +47,17 @@ mkdir -p bin
 ln -s /app/php/bin/php bin/php
 
 # check if we have Composer dependencies and vendors are not bundled
-if [ -f www/composer.json ] && [ ! -d www/vendor ]; then
+if [ -f www/ExampleApp/composer.json ] && [ ! -d www/ExampleApp/vendor ]; then
   GIT_DIR_ORIG=$GIT_DIR
   unset GIT_DIR
   echo "-----> Installing Composer dependencies"
   COMPOSER_URL="http://getcomposer.org/composer.phar"
-  curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
-  cd www
+  curl --silent --max-time 60 --location "$COMPOSER_URL" > www/ExampleApp/composer.phar
+  cd www/ExampleApp
   LD_LIBRARY_PATH=$BUILD_DIR/php/ext $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini composer.phar install --prefer-source
   rm -rf vendor/**/.git
   cd $BUILD_DIR
-  rm www/composer.phar
+  rm www/ExampleApp/composer.phar
   export GIT_DIR=$GIT_DIR_ORIG
 fi
 
